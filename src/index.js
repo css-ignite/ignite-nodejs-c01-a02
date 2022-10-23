@@ -9,6 +9,7 @@ app.get("/", (req, res) => {
   // Retorno do Status da Requisição Http
   res.status(200);
 
+  // Retorno da rota
   return res.send("Api Online")._construct;
 });
 
@@ -17,6 +18,7 @@ app.get("/status", (req, res) => {
   // Retorno do Status da Requisição Http
   res.status(200);
 
+  // Retorno da rota
   return res.json({
     message: "Api Online",
   });
