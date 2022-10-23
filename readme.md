@@ -3,6 +3,18 @@
 
 Este projeto tem por finalidade a criação de uma API fictícia para controle de transações financeiras.
 
+## Bibliotevas Utilizadas
+
+### UUID
+
+- [https://www.npmjs.com/package/uuid](https://www.npmjs.com/package/uuid)
+
+Instalação
+
+```bash
+npm install uuid
+```
+
 ## Requisitos do Projeto
 
 ### Requisitos
