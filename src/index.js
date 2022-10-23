@@ -10,7 +10,9 @@ app.get("/", (req, res) => {
   res.status(200);
 
   // Retorno da rota
-  return res.send("Api Online")._construct;
+  return res.json({
+    message: "Api Online",
+  });
 });
 
 // Criando uma rota de Get para a rota "/json"
