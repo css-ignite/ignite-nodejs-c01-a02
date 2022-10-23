@@ -26,5 +26,15 @@ app.get("/status", (req, res) => {
   });
 });
 
+app.get("/account", (req, res) => {
+  // Retorno do Status da Requisição Http
+  res.status(200);
+});
+
+app.post("/account", (req, res) => {
+  // Retorno do Status da Requisição Http
+  res.status(200);
+});
+
 // Adicionando um listen para execução do express na porta 3333
 app.listen(3333);

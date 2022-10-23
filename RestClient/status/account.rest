@@ -1,0 +1,18 @@
+
+@baseUrl = http://localhost:3333
+
+// @name = Buscando a Lista de Cursos
+GET {{baseUrl}}/account HTTP/1.1
+
+###
+
+// @name = Buscando a Lista de Cursos
+POST {{baseUrl}}/account HTTP/1.1
+
+{
+    "cpf": "12345678910",
+    "name": "Fulano de Tal",
+    "email": "",
+    "phone": "",
+    "status": "active"
+}
