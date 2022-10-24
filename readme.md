@@ -29,6 +29,7 @@ Auui estão descritas todas as funcionalidades que serão implementadas na aplic
 - [x] Deve ser possível atualizar dados da conta do cliente
 - [x] Deve ser possível obter dados da conta do cliente
 - [X] Deve ser possível deletar uma conta
+- [x] Deve retornar o balance
 
 ### Regras de Negócio
 
@@ -40,6 +41,7 @@ Aqui estão descritas todas as regras de negócio que serão implementadas na ap
 - [x] Não deve ser possível fazer saque em uma conta não existente
 - [x] Não deve ser possível fazer saque quando o saldo for insuficiente
 - [X] Não deve ser possível excluir uma conta não existente
+- [x] Não deve ser possível buscar balance de uma conta não existente
 
 ## Métodos da API
 

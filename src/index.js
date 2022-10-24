@@ -62,6 +62,20 @@ app.get("/account/:cpf", (request, response) => {
   return response.status(200).json(customer);
 });
 
+app.get("/account/param/info", (request, response) => {
+  const { cpf } = request.query;
+
+  const customer = customers.find((customer) => customer.cpf === cpf);
+
+  if (!customer) {
+    return response.status(404).json({
+      error: "Customer not found",
+    });
+  }
+
+  return response.status(200).json(customer);
+});
+
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body;
 
@@ -110,15 +124,19 @@ app.put("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
   });
 });
 
-app.delete("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+app.delete(
+  "/account",
+  middlewareVerifyIfExistsAccountCPF,
+  (request, response) => {
     const { customer } = request;
 
     customers.splice(customer, 1);
 
     return response.status(200).json({
-        message: "Account deleted",
+      message: "Account deleted",
     });
-});
+  }
+);
 
 var server = app.listen(3333, function () {
   var host = server.address().address;
@@ -225,3 +243,16 @@ app.post(
     });
   }
 );
+
+app.get("/balance", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request;
+
+  const balance = getBalance(customer.statement);
+
+  return response.status(200).json({
+    message: "Balance",
+    data: {
+      balance,
+    },
+  });
+});
