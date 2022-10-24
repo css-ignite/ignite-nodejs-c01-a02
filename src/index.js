@@ -76,8 +76,10 @@ app.get("/account/:cpf", (req, res) => {
   return res.status(200).json(customer);
 });
 
-app.get("/statement/:cpf", (req, res) => {
-  const { cpf } = req.params;
+app.get("/statement", (req, res) => {
+  const { cpf } = req.headers;
+
+  console.log(cpf);
 
   const customer = customers.find(customer => customer.cpf === cpf);
 

@@ -30,4 +30,6 @@ Accept: application/json
 
 ###
 
-GET {{baseUrl}}/statement/12345678910 HTTP/1.1
+GET {{baseUrl}}/statement HTTP/1.1
+Content-Type: application/js
+cpf: 12345678910
