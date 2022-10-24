@@ -60,15 +60,29 @@ cpf: 12345678910
 
 {
     "cpf": "12345678910",
-    "name": "Cliente Cpf 12345678910 Alterado"
+    "name": "Cliente Cpf 12345678910 Alterado PUT"
 }
 
 ###
 
-DELETE {{baseUrl}}/account/12345678910 HTTP/1.1
+PATCH  {{baseUrl}}/account HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
+cpf: 12345678910
+
+{
+    "cpf": "12345678910",
+    "name": "Cliente Cpf 12345678910 Alterado PATCH"
+}
+
+###
+
+DELETE {{baseUrl}}/account HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
+cpf: 12345678910
 
 ###
 
@@ -111,3 +125,13 @@ cpf: 12345678910
     "description" : "Saque referente a teste de API",
     "amount" : 100.00
 }
+
+###
+
+GET {{baseUrl}}/balance HTTP/1.1
+Content-Type: application/js
+Accept: application/json
+auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
+cpf: 12345678910
+
+###

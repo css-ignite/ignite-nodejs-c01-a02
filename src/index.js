@@ -124,6 +124,21 @@ app.put("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
   });
 });
 
+app.patch("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+    const { name } = request.body;
+    const { customer } = request;
+  
+    customer.name = name;
+  
+    return response.status(201).json({
+      message: "Account updated",
+      data: {
+        name,
+        statement: [],
+      },
+    });
+  });
+
 app.delete(
   "/account",
   middlewareVerifyIfExistsAccountCPF,
