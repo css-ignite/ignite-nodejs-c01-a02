@@ -5,6 +5,3 @@
 GET {{baseUrl}}/ HTTP/1.1
 
 ###
-
-// @name = Buscando a Lista de Cursos
-GET {{baseUrl}}/status HTTP/1.1

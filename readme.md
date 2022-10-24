@@ -51,3 +51,14 @@ Aqui estão descritas todas as rotas implementadas na API.
 | ------ | ------ | ------ |
 | GET | [http://{baseUrl}:3333/](http://{baseUrl}:3333/) | Retorna o Status de Funcionamento da API |
 | GET | [http://{baseUrl}:3333/status](http://{baseUrl}:3333/status) | Retorna o Status de Funcionamento da API |
+
+### accounts
+
+| Método | Rota | Descrição |
+| ------ | ------ | ------ |
+| GET | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Retorna todas as contas |
+| POST | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Cria uma nova conta |
+
+Validações da rota
+
+- Não deve ser possível criar uma conta com um CFP já existente

@@ -2,10 +2,9 @@ const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 
 const app = express();
+const customers = [];
 
 app.use(express.json());
-
-const customers = [];
 
 app.get("/", (req, res) => {
   return res.status(200).json({
@@ -25,7 +24,6 @@ app.get("/account", (req, res) => {
 
 app.post("/account", (req, res) => {
   const { cpf, name } = req.body;
-  const id = uuidv4();
 
   const customerAlreadyExists = customers.some(
     (customer) => customer.cpf === cpf
@@ -36,6 +34,8 @@ app.post("/account", (req, res) => {
       error: "Customer already exists!",
     });
   }
+
+  const id = uuidv4();
 
   customers.push({
     id,
@@ -55,5 +55,9 @@ app.post("/account", (req, res) => {
   });
 });
 
-// Adicionando um listen para execução do express na porta 3333
-app.listen(3333);
+var server = app.listen(3333, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log("Example app listening at http://%s:%s", host, port);
+});
