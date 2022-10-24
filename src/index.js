@@ -48,6 +48,20 @@ app.get("/account", (request, response) => {
   return response.status(200).json(customers);
 });
 
+app.get("/account/:cpf", (request, response) => {
+  const { cpf } = request.params;
+
+  const customer = customers.find((customer) => customer.cpf === cpf);
+
+  if (!customer) {
+    return response.status(404).json({
+      error: "Customer not found",
+    });
+  }
+
+  return response.status(200).json(customer);
+});
+
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body;
 
@@ -81,25 +95,26 @@ app.post("/account", (request, response) => {
   });
 });
 
+app.put("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+  const { name } = request.body;
+  const { customer } = request;
+
+  customer.name = name;
+
+  return response.status(201).json({
+    message: "Account updated",
+    data: {
+      name,
+      statement: [],
+    },
+  });
+});
+
 var server = app.listen(3333, function () {
   var host = server.address().address;
   var port = server.address().port;
 
   console.log("Example app listening at http://%s:%s", host, port);
-});
-
-app.get("/account/:cpf", (request, response) => {
-  const { cpf } = request.params;
-
-  const customer = customers.find((customer) => customer.cpf === cpf);
-
-  if (!customer) {
-    return response.status(404).json({
-      error: "Customer not found",
-    });
-  }
-
-  return response.status(200).json(customer);
 });
 
 // Se eu informar no app, todas as rotas abaixo vão validar o middleware
@@ -112,6 +127,29 @@ app.get(
     const { customer } = request;
 
     return response.status(200).send(customer.statement);
+  }
+);
+
+app.get(
+  "/statement/date",
+  middlewareVerifyIfExistsAccountCPF,
+  (request, response) => {
+    const { customer } = request;
+    const { date } = request.query;
+
+    const dateFormat = new Date(date + " 00:00");
+
+    const statement = customer.statement.filter((statement) => {
+      const statementDate = statement.created_at;
+      const formateDate = new Date(dateFormat);
+
+      console.log(statementDate.toDateString());
+      console.log(formateDate.toDateString());
+
+      return statementDate.toDateString() === formateDate.toDateString();
+    });
+
+    return response.status(200).json(statement);
   }
 );
 
@@ -175,28 +213,5 @@ app.post(
         type: "debit",
       },
     });
-  }
-);
-
-app.get(
-  "/statement/date",
-  middlewareVerifyIfExistsAccountCPF,
-  (request, response) => {
-    const { customer } = request;
-    const { date } = request.query;
-
-    const dateFormat = new Date(date + " 00:00");
-
-    const statement = customer.statement.filter((statement) => {
-      const statementDate = statement.created_at;
-      const formateDate = new Date(dateFormat);
-
-      console.log(statementDate.toDateString());
-      console.log(formateDate.toDateString());
-
-      return statementDate.toDateString() === formateDate.toDateString();
-    });
-
-    return response.status(200).json(statement);
   }
 );

@@ -40,6 +40,31 @@ auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
 
 ###
 
+POST {{baseUrl}}/account HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
+
+{
+    "cpf": "12345678911",
+    "name": "Cliente Cpf 12345678911"
+}
+
+###
+
+PUT {{baseUrl}}/account HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
+cpf: 12345678910
+
+{
+    "cpf": "12345678910",
+    "name": "Cliente Cpf 12345678910 Alterado"
+}
+
+###
+
 GET {{baseUrl}}/statement HTTP/1.1
 Content-Type: application/js
 Accept: application/json
