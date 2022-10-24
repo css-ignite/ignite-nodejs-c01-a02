@@ -20,6 +20,18 @@ function middlewareVerifyIfExistsAccountCPF(request, response, next) {
   return next();
 }
 
+function getBalance(statement) {
+  const balance = statement.reduce((acc, operation) => {
+    if (operation.type === "credit") {
+      return acc + operation.amount;
+    } else {
+      return acc - operation.amount;
+    }
+  }, 0);
+
+  return balance;
+}
+
 app.get("/", (request, response) => {
   return response.status(200).json({
     message: "Api Online",
@@ -98,6 +110,7 @@ app.get(
   middlewareVerifyIfExistsAccountCPF,
   (request, response) => {
     const { customer } = request;
+
     return response.status(200).send(customer.statement);
   }
 );
@@ -128,5 +141,62 @@ app.post(
         type: "credit",
       },
     });
+  }
+);
+
+app.post(
+  "/withdraw",
+  middlewareVerifyIfExistsAccountCPF,
+  (request, response) => {
+    const { description, amount } = request.body;
+    const { customer } = request;
+
+    const balance = getBalance(customer.statement);
+
+    if (balance < amount) {
+      return response.status(400).json({ error: "Insufficient funds!" });
+    }
+
+    const statementOperation = {
+      description,
+      amount,
+      created_at: new Date(),
+      type: "debit",
+    };
+
+    customer.statement.push(statementOperation);
+
+    return response.status(201).json({
+      message: "Withdraw created",
+      data: {
+        description,
+        amount,
+        created_at: new Date(),
+        type: "debit",
+      },
+    });
+  }
+);
+
+app.get(
+  "/statement/date",
+  middlewareVerifyIfExistsAccountCPF,
+  (request, response) => {
+    const { customer } = request;
+    const { date } = request.query;
+
+    const dateFormat = new Date(date + " 00:00");
+
+    const statement = customer.statement.filter((statement) => {
+      const statementDate = statement.created_at;
+      const formateDate = new Date(dateFormat);
+
+      console.log(statementDate.toDateString());
+      console.log(formateDate.toDateString());
+
+      return statementDate.toDateString() === formateDate.toDateString();
+    });
+
+    return response.status(200).json(statement);
   }
 );
