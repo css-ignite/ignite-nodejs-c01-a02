@@ -110,6 +110,16 @@ app.put("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
   });
 });
 
+app.delete("/account", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+
+    customers.splice(customer, 1);
+
+    return response.status(200).json({
+        message: "Account deleted",
+    });
+});
+
 var server = app.listen(3333, function () {
   var host = server.address().address;
   var port = server.address().port;
