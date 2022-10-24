@@ -62,20 +62,6 @@ app.get("/account/:cpf", (request, response) => {
   return response.status(200).json(customer);
 });
 
-app.get("/account/param/info", (request, response) => {
-  const { cpf } = request.query;
-
-  const customer = customers.find((customer) => customer.cpf === cpf);
-
-  if (!customer) {
-    return response.status(404).json({
-      error: "Customer not found",
-    });
-  }
-
-  return response.status(200).json(customer);
-});
-
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body;
 

@@ -59,7 +59,11 @@ Aqui estão descritas todas as rotas implementadas na API.
 | Método | Rota | Descrição |
 | ------ | ------ | ------ |
 | GET | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Retorna todas as contas |
-| POST | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Cria uma nova conta |
+| GET | [http://{baseUrl}:3333/accounts/{cpf}](http://{baseUrl}:3333/accounts/{cpf}) | Retorna uma conta específica pelo cpf |
+| POST | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Cria uma nova conta nova |
+| PUT | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Atualiza uma conta específica pelo cpf |
+| PATCH | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Atualiza uma conta específica pelo cpf |
+| DELETE | [http://{baseUrl}:3333/accounts](http://{baseUrl}:3333/accounts) | Deleta uma conta específica pelo cpf |
 
 Validações da rota
 
@@ -69,8 +73,40 @@ Validações da rota
 
 | Método | Rota | Descrição |
 | ------ | ------ | ------ |
-| GET | [http://{baseUrl}:3333/statements/:id](http://{baseUrl}:3333/statements/:id) | Retorna o extrato bancário do cliente |
+| GET | [http://{baseUrl}:3333/statements](http://{baseUrl}:3333/statements) | Retorna o extrato bancário do cliente |
+| GET | [http://{baseUrl}:3333/statements/date](http://{baseUrl}:3333/statements/date) | Retorna o extrato bancário do cliente por data |
 
 Validações da rota
 
 - Não deve ser possível buscar o extrato de uma conta não existente
+
+### deposit
+
+| Método | Rota | Descrição |
+| ------ | ------ | ------ |
+| POST | [http://{baseUrl}:3333/deposit](http://{baseUrl}:3333/deposit) | Realiza um depósito para uma conta específica pelo cpf |
+
+Validações da rota
+
+- Não deve ser possível fazer depósito para uma conta não existente
+
+### withdraw
+
+| Método | Rota | Descrição |
+| ------ | ------ | ------ |
+| POST | [http://{baseUrl}:3333/withdraw](http://{baseUrl}:3333/withdraw) | Realiza um saque para uma conta específica pelo cpf |
+
+Validações da rota
+
+- Não deve ser possível fazer saques para uma conta não existente
+- Não deve ser possível fazer saques para uma conta sem saldo suficiente
+
+### balance
+
+| Método | Rota | Descrição |
+| ------ | ------ | ------ |
+| GET | [http://{baseUrl}:3333/balance](http://{baseUrl}:3333/statements) | Retorna o saldo para uma conta específica pelo cpf |
+
+Validações da rota
+
+- Não deve ser possível buscar o saldo de uma conta não existente
