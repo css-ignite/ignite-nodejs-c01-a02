@@ -8,11 +8,12 @@ GET {{baseUrl}}/account HTTP/1.1
 
 // @name = Buscando a Lista de Cursos
 POST {{baseUrl}}/account HTTP/1.1
+Content-Type: application/json
+Accept: application/json
 
 {
     "cpf": "12345678910",
-    "name": "Fulano de Tal",
-    "email": "",
-    "phone": "",
-    "status": "active"
+    "name": "Cliente Cpf 12345678910"
 }
+
+###

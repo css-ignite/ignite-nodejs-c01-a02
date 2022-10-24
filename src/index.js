@@ -1,39 +1,48 @@
-// Criando uma constante com a instância do express
+const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 
-// Instanciando o express
 const app = express();
 
-// Criando uma rota de Get para a rota raiz "/"
-app.get("/", (req, res) => {
-  // Retorno do Status da Requisição Http
-  res.status(200);
+app.use(express.json());
 
-  // Retorno da rota
-  return res.json({
+const customers = [];
+
+app.get("/", (req, res) => {
+  return res.status(200).json({
     message: "Api Online",
   });
 });
 
-// Criando uma rota de Get para a rota "/json"
 app.get("/status", (req, res) => {
-  // Retorno do Status da Requisição Http
-  res.status(200);
-
-  // Retorno da rota
-  return res.json({
+  return res.status(200).json({
     message: "Api Online",
   });
 });
 
 app.get("/account", (req, res) => {
-  // Retorno do Status da Requisição Http
-  res.status(200);
+  return res.status(200).json(customers);
 });
 
 app.post("/account", (req, res) => {
-  // Retorno do Status da Requisição Http
-  res.status(200);
+  const { cpf, name } = req.body;
+  const id = uuidv4();
+
+  customers.push({
+    id,
+    cpf,
+    name,
+    statement: [],
+  });
+
+  return res.status(201).json({
+    message: "Account created",
+    data: {
+      id,
+      cpf,
+      name,
+      statement: [],
+    },
+  });
 });
 
 // Adicionando um listen para execução do express na porta 3333
