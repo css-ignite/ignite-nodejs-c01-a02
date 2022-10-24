@@ -45,3 +45,15 @@ Content-Type: application/js
 Accept: application/json
 auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
 cpf: 12345678910
+
+###
+
+POST {{baseUrl}}/deposit HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+auth: 2re3422e-2e2e-2e2e-2e2e-2e2e2e2e2e2e
+
+{
+    "description" : "Depósito referente a teste de API",
+    "amount" : 100.00
+}

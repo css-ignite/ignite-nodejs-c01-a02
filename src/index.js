@@ -93,7 +93,40 @@ app.get("/account/:cpf", (request, response) => {
 // Se eu informar no app, todas as rotas abaixo vão validar o middleware
 //app.use(verifyIfExistsAccountCPF);
 
-app.get("/statement", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+app.get(
+  "/statement",
+  middlewareVerifyIfExistsAccountCPF,
+  (request, response) => {
     const { customer } = request;
-  return response.status(200).send(customer.statement);
-});
+    return response.status(200).send(customer.statement);
+  }
+);
+
+app.post(
+  "/deposit",
+  middlewareVerifyIfExistsAccountCPF,
+  (request, response) => {
+    const { description, amount } = request.body;
+
+    const { customer } = request;
+
+    const statementOperation = {
+      description,
+      amount,
+      created_at: new Date(),
+      type: "credit",
+    };
+
+    customer.statement.push(statementOperation);
+
+    return response.status(201).json({
+      message: "Deposit created",
+      data: {
+        description,
+        amount,
+        created_at: new Date(),
+        type: "credit",
+      },
+    });
+  }
+);
