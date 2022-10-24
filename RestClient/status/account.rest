@@ -9,10 +9,6 @@ GET {{baseUrl}}/account/12345678910 HTTP/1.1
 
 ###
 
-GET {{baseUrl}}/statement/12345678910 HTTP/1.1
-
-###
-
 POST {{baseUrl}}/account HTTP/1.1
 Content-Type: application/json
 Accept: application/json

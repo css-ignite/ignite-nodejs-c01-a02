@@ -22,7 +22,7 @@ npm install uuid
 Auui estão descritas todas as funcionalidades que serão implementadas na aplicação.
 
 - [x] Deve ser possível criar uma conta
-- [ ] Deve ser possível buscar o extrato bancário do cliente
+- [x] Deve ser possível buscar o extrato bancário do cliente
 - [ ] Deve ser possível realizar um depósito
 - [ ] Deve ser possível realizar um saque
 - [ ] Deve ser possível buscar o extrato bancário do cliente por data
@@ -62,3 +62,13 @@ Aqui estão descritas todas as rotas implementadas na API.
 Validações da rota
 
 - Não deve ser possível criar uma conta com um CFP já existente
+
+### statements
+
+| Método | Rota | Descrição |
+| ------ | ------ | ------ |
+| GET | [http://{baseUrl}:3333/statements/:id](http://{baseUrl}:3333/statements/:id) | Retorna o extrato bancário do cliente |
+
+Validações da rota
+
+- Não deve ser possível buscar o extrato de uma conta não existente
