@@ -6,31 +6,45 @@ const customers = [];
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  return res.status(200).json({
+function middlewareVerifyIfExistsAccountCPF(request, response, next) {
+  const { cpf } = request.headers;
+
+  const customer = customers.find((customer) => customer.cpf === cpf);
+
+  if (!customer) {
+    return response.status(400).json({ error: "Customer not found" });
+  }
+
+  request.customer = customer;
+
+  return next();
+}
+
+app.get("/", (request, response) => {
+  return response.status(200).json({
     message: "Api Online",
   });
 });
 
-app.get("/status", (req, res) => {
-  return res.status(200).json({
+app.get("/status", (request, response) => {
+  return response.status(200).json({
     message: "Api Online",
   });
 });
 
-app.get("/account", (req, res) => {
-  return res.status(200).json(customers);
+app.get("/account", (request, response) => {
+  return response.status(200).json(customers);
 });
 
-app.post("/account", (req, res) => {
-  const { cpf, name } = req.body;
+app.post("/account", (request, response) => {
+  const { cpf, name } = request.body;
 
   const customerAlreadyExists = customers.some(
     (customer) => customer.cpf === cpf
   );
 
   if (customerAlreadyExists) {
-    return res.status(400).json({
+    return response.status(400).json({
       error: "Customer already exists!",
     });
   }
@@ -44,7 +58,7 @@ app.post("/account", (req, res) => {
     statement: [],
   });
 
-  return res.status(201).json({
+  return response.status(201).json({
     message: "Account created",
     data: {
       id,
@@ -62,32 +76,24 @@ var server = app.listen(3333, function () {
   console.log("Example app listening at http://%s:%s", host, port);
 });
 
-app.get("/account/:cpf", (req, res) => {
-  const { cpf } = req.params;
+app.get("/account/:cpf", (request, response) => {
+  const { cpf } = request.params;
 
   const customer = customers.find((customer) => customer.cpf === cpf);
 
   if (!customer) {
-    return res.status(404).json({
+    return response.status(404).json({
       error: "Customer not found",
     });
   }
 
-  return res.status(200).json(customer);
+  return response.status(200).json(customer);
 });
 
-app.get("/statement", (req, res) => {
-  const { cpf } = req.headers;
+// Se eu informar no app, todas as rotas abaixo vão validar o middleware
+//app.use(verifyIfExistsAccountCPF);
 
-  console.log(cpf);
-
-  const customer = customers.find(customer => customer.cpf === cpf);
-
-  if (!customer) {
-    return res.status(404).json({
-      error: "Customer not found",
-    });
-  }
-
-  return res.status(200).json(customer.statement);
+app.get("/statement", middlewareVerifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+  return response.status(200).send(customer.statement);
 });
