@@ -1,12 +1,18 @@
 
 @baseUrl = http://localhost:3333
 
-// @name = Buscando a Lista de Cursos
 GET {{baseUrl}}/account HTTP/1.1
 
 ###
 
-// @name = Buscando a Lista de Cursos
+GET {{baseUrl}}/account/12345678910 HTTP/1.1
+
+###
+
+GET {{baseUrl}}/statement/12345678910 HTTP/1.1
+
+###
+
 POST {{baseUrl}}/account HTTP/1.1
 Content-Type: application/json
 Accept: application/json

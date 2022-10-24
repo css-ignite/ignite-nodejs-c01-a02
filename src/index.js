@@ -61,3 +61,31 @@ var server = app.listen(3333, function () {
 
   console.log("Example app listening at http://%s:%s", host, port);
 });
+
+app.get("/account/:cpf", (req, res) => {
+  const { cpf } = req.params;
+
+  const customer = customers.find((customer) => customer.cpf === cpf);
+
+  if (!customer) {
+    return res.status(404).json({
+      error: "Customer not found",
+    });
+  }
+
+  return res.status(200).json(customer);
+});
+
+app.get("/statement/:cpf", (req, res) => {
+  const { cpf } = req.params;
+
+  const customer = customers.find(customer => customer.cpf === cpf);
+
+  if (!customer) {
+    return res.status(404).json({
+      error: "Customer not found",
+    });
+  }
+
+  return res.status(200).json(customer.statement);
+});
